@@ -22,4 +22,13 @@ describe Application do
       expect(response.body).to eq("Hello Alice!")
     end
   end
+
+  context 'GET /names' do
+    it 'return the list of names' do
+      response = get('/names?names=Julia,%20Mary,%20Karim')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to eq('Julia, Mary, Karim')
+    end
+  end
 end
