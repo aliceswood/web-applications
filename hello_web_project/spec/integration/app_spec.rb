@@ -34,7 +34,7 @@ describe Application do
 
   context 'POST /sort-names' do
     it 'returns a list of the sorted names' do
-      response = post('/sort-names?names=Joe,Alice,Zoe,Julia,Kieran')
+      response = post('/sort-names', names: 'Joe,Alice,Zoe,Julia,Kieran')
 
       expect(response.status).to eq(200)
       expect(response.body).to eq('Alice,Joe,Julia,Kieran,Zoe')
