@@ -40,4 +40,18 @@ describe Application do
       expect(response.body).to eq('Alice,Joe,Julia,Kieran,Zoe')
     end
   end
+
+  context 'GET /' do
+    it 'returns the html message with the name Alice' do
+      response = get('/', name: 'Alice')
+
+      expect(response.body).to include('<h1>Welcome to your page, Alice!</h1>')
+    end
+
+    it 'returns the html message with the name Chris' do
+      response = get('/', name: 'Chris')
+
+      expect(response.body).to include('<h1>Welcome to your page, Chris!</h1>')
+    end
+  end
 end
