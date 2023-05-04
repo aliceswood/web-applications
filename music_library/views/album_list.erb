@@ -9,7 +9,7 @@
       <p>
         Title: <%= album.title %>
         Released: <%= album.release_year %>
-        <a href="/albums/<%= album.id %>">More info</a>
+        <button onclick="window.location.href='/albums/<%= album.id %>';">More info</button>
       </p>
       <% end %>
     </div>
