@@ -77,5 +77,15 @@ describe Application do
       expect(response.body).to include('Surfer Rosa')
       expect(response.body).to include('Released: 1988')
     end
+     
+    it 'links album to corresponding /albums/1' do
+      response = get('/albums')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<a href="/albums/1">')
+      expect(response.body).to include('Doolittle')
+    end
   end
+
+
 end
