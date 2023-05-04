@@ -10,17 +10,6 @@ describe Application do
   # class so our tests work.
   let(:app) { Application.new }
 
-  context 'GET /albums' do
-    it 'should return the list of albums' do
-      response = get('/albums')
-
-      expected_response = 'Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
-
-      expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
-    end
-  end
-
   context 'POST /albums' do
     it 'should create a new album' do
       response = post(
@@ -81,11 +70,12 @@ describe Application do
   end
 
   context 'GET /albums' do
-    it 'returns a list of albums' do
+    it 'returns a list of albums and release years' do
       response = get('/albums')
 
       expect(response.status).to eq(200)
-      expect(response.body).to eq()
+      expect(response.body).to include('Surfer Rosa')
+      expect(response.body).to include('Released: 1988')
     end
   end
 end
