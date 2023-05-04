@@ -78,12 +78,22 @@ describe Application do
       expect(response.body).to include('Released: 1988')
     end
      
-    it 'links album to corresponding /albums/1' do
+    it 'links album to corresponding /albums/2' do
       response = get('/albums')
 
       expect(response.status).to eq(200)
-      expect(response.body).to include('<a href="/albums/1">')
-      expect(response.body).to include('Doolittle')
+      expect(response.body).to include("href='/albums/2';")
+      expect(response.body).to include('Surfer Rosa')
+    end
+  end
+
+  context 'GET /artists/:id' do
+    it 'should return info about artist 2' do
+      response = get('/artists/2')
+ 
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>ABBA</h1>')
+      expect(response.body).to include('Genre: Pop')
     end
   end
 
