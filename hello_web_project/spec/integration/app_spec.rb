@@ -45,13 +45,13 @@ describe Application do
     it 'returns the html message with the name Alice' do
       response = get('/', name: 'Alice')
 
-      expect(response.body).to include('<h1>Welcome to your page, Alice!</h1>')
+      expect(response.body).to include('<h1>Hello, Alice!</h1>')
     end
 
     it 'returns the html message with the name Chris' do
       response = get('/', name: 'Chris')
 
-      expect(response.body).to include('<h1>Welcome to your page, Chris!</h1>')
+      expect(response.body).to include('<h1>Hello, Chris!</h1>')
     end
   end
 end
