@@ -50,36 +50,6 @@ describe Application do
     end
   end
 
-  context 'GET /artists' do
-    it 'returns a list of the artists' do
-      response = get('/artists')
-
-      expected_response = 'Pixies, ABBA, Taylor Swift, Nina Simone'
-
-      expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
-    end
-  end
-
-  context 'POST /artists' do
-    it 'should create a new artist' do
-      response = post(
-        '/artists',
-        name: 'Wild nothing',
-        genre: 'Indie'
-      )
-
-      expect(response.status).to eq(200)
-      expect(response.body).to eq('')
-
-      response = get('/artists')
-      expected_response = 'Pixies, ABBA, Taylor Swift, Nina Simone, Wild nothing'
-
-      expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
-    end
-  end
-
   # context 'GET /albums/:id' do
   #   it 'should return info about album 2' do
   #     response = get('/albums/2')
@@ -109,13 +79,52 @@ describe Application do
     end
   end
 
-  context 'GET /artists/:id' do
-    it 'should return info about artist 2' do
-      response = get('/artists/2')
- 
+  context 'GET /artists' do
+    it 'returns a list of the artists' do
+      response = get('/artists')
+
       expect(response.status).to eq(200)
-      expect(response.body).to include('<h1>ABBA</h1>')
-      expect(response.body).to include('Genre: Pop')
+      expect(response.body).to include("Name: Pixies <br>")
+    end
+  end
+
+  context 'POST /artists' do
+    it 'should create a new artist' do
+      response = post(
+        '/artists',
+        name: 'Wild nothing',
+        genre: 'Indie'
+      )
+
+      expect(response.status).to eq(200)
+      expect(response.body).to eq('')
+
+      response = get('/artists')
+      
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include("Name: Wild nothing <br>")
+    end
+  end
+
+  # context 'GET /artists/:id' do
+  #   it 'should return info about artist 2' do
+  #     response = get('/artists/2')
+ 
+  #     expect(response.status).to eq(200)
+  #     expect(response.body).to include('<h1>ABBA</h1>')
+  #     expect(response.body).to include('Genre: Pop')
+  #   end
+  # end
+
+  context 'GET /artists/new' do
+    it 'should return a form to add a new artist' do
+      response = get('artists/new')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<form method="POST" action="/artists">')
+      expect(response.body).to include('<input type="text" name="name"/>')
+      expect(response.body).to include('<input type="text" name="genre"/>')
     end
   end
 end
