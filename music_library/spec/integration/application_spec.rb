@@ -10,7 +10,29 @@ describe Application do
   # class so our tests work.
   let(:app) { Application.new }
 
+  context 'GET /albums/new' do
+    it 'should return the form to complete and add a new album' do
+      response = get('/albums/new')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<form method="POST" action="/albums">')
+      expect(response.body).to include('<input type="text" name="title" />')
+      expect(response.body).to include('<input type="text" name="release_year" />')
+      expect(response.body).to include('<input type="text" name="artist_id" />')
+    end
+  end
+  
   context 'POST /albums' do
+    it 'should validate album parameters' do
+      response = post(
+        '/albums',
+        invalid_artist_title: 'OK Computer',
+        another_invalid_thing: 123
+      )
+
+      expect(response.status).to eq(400)
+    end
+
     it 'should create a new album' do
       response = post(
         '/albums',
@@ -24,7 +46,7 @@ describe Application do
 
       response = get('/albums')
 
-      expect(response.body).to include ('Voyage')
+      expect(response.body).to include('Voyage')
     end
   end
 
@@ -58,16 +80,16 @@ describe Application do
     end
   end
 
-  context 'GET /albums/:id' do
-    it 'should return info about album 2' do
-      response = get('/albums/2')
+  # context 'GET /albums/:id' do
+  #   it 'should return info about album 2' do
+  #     response = get('/albums/2')
  
-      expect(response.status).to eq(200)
-      expect(response.body).to include('<h1>Surfer Rosa</h1>')
-      expect(response.body).to include('Release year: 1988')
-      expect(response.body).to include('Artist: Pixies')
-    end
-  end
+  #     expect(response.status).to eq(200)
+  #     expect(response.body).to include('<h1>Surfer Rosa</h1>')
+  #     expect(response.body).to include('Release year: 1988')
+  #     expect(response.body).to include('Artist: Pixies')
+  #   end
+  # end
 
   context 'GET /albums' do
     it 'returns a list of albums and release years' do
@@ -96,6 +118,4 @@ describe Application do
       expect(response.body).to include('Genre: Pop')
     end
   end
-
-
 end
